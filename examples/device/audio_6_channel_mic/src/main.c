@@ -102,21 +102,22 @@ int main(void) {
   for (uint16_t cnt = 0; cnt < AUDIO_SAMPLE_RATE / 1000; cnt++) {
     // CH0 saw wave
     *p_buff++ = dataVal;
-    // CH1 inverted saw wave
-    *p_buff++ = 3200 + AUDIO_SAMPLE_RATE / 1000 - dataVal;
     dataVal += 32;
-    // CH3 square wave
+    // CH1 sinus wave
+    float t0 = 2 * 3.1415f * cnt / (AUDIO_SAMPLE_RATE / 1000);
+    *p_buff++ = (uint16_t) ((int16_t) (sinf(t0) * 750) + 1000);
+
+    // CH2 square wave
     *p_buff++ = cnt < (AUDIO_SAMPLE_RATE / 1000 / 2) ? 3400 : 5000;
+    // CH3 square wave
+    *p_buff++ = cnt < (AUDIO_SAMPLE_RATE / 1000 / 2) ? 200: 700;
+
     // CH4 sinus wave
-    float t = 2 * 3.1415f * cnt / (AUDIO_SAMPLE_RATE / 1000);
-    *p_buff++ = (uint16_t) ((int16_t) (sinf(t) * 750) + 6000);
-
-    // CH5 sinus wave
     float t1 = 2 * 3.1415f * cnt / (AUDIO_SAMPLE_RATE / 1000);
-    *p_buff++ = (uint16_t) ((int16_t) (sinf(t1) * 250) + 6000);
+    *p_buff++ = (uint16_t) ((int16_t) (sinf(t1) * 250) + 2000);
 
-    // CH6 square wave
-    *p_buff++ = cnt < (AUDIO_SAMPLE_RATE / 1000 / 2) ? 2000 : 8000;
+    // CH5 square wave
+    *p_buff++ = cnt < (AUDIO_SAMPLE_RATE / 1000 / 2) ? 100 : 500;
   }
 
   while (1) {
