@@ -55,3 +55,7 @@ Release
 BrowseInfo
 .cmake_build
 README_processed.rst
+sample_h7/
+.vscode
+.devcontainer
+.DS_Store
